@@ -1,0 +1,7 @@
+pip\_services3\_prometheus.build.DefaultPrometheusFactory module
+================================================================
+
+.. automodule:: pip_services3_prometheus.build.DefaultPrometheusFactory
+   :members:
+   :undoc-members:
+   :show-inheritance:

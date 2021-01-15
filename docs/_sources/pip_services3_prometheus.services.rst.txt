@@ -1,0 +1,18 @@
+pip\_services3\_prometheus.services package
+===========================================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   pip_services3_prometheus.services.PrometheusMetricsService
+
+Module contents
+---------------
+
+.. automodule:: pip_services3_prometheus.services
+   :members:
+   :undoc-members:
+   :show-inheritance:

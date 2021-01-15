@@ -1,0 +1,7 @@
+pip\_services3\_prometheus.services.PrometheusMetricsService module
+===================================================================
+
+.. automodule:: pip_services3_prometheus.services.PrometheusMetricsService
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,18 @@
+pip\_services3\_prometheus.build package
+========================================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   pip_services3_prometheus.build.DefaultPrometheusFactory
+
+Module contents
+---------------
+
+.. automodule:: pip_services3_prometheus.build
+   :members:
+   :undoc-members:
+   :show-inheritance:

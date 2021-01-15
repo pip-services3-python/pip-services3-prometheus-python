@@ -1,0 +1,7 @@
+pip\_services3\_prometheus.count.PrometheusCounterConverter module
+==================================================================
+
+.. automodule:: pip_services3_prometheus.count.PrometheusCounterConverter
+   :members:
+   :undoc-members:
+   :show-inheritance:
