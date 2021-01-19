@@ -16,6 +16,8 @@ Links
 from setuptools import setup
 from setuptools import find_packages
 
+readme = open('readme.md').read()
+
 setup(
     name='pip_services3_prometheus',
     version='3.0.0',
@@ -24,7 +26,7 @@ setup(
     description='Prometheus components for Pip.Services in Python',
     author='Conceptual Vision Consulting LLC',
     author_email='seroukhov@gmail.com',
-    long_description=__doc__,
+    long_description=readme,
     long_description_content_type="text/markdown",
     packages=find_packages(exclude=['config', 'data', 'test']),
     include_package_data=True,
