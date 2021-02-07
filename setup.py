@@ -16,11 +16,14 @@ Links
 from setuptools import setup
 from setuptools import find_packages
 
-readme = open('readme.md').read()
+try:
+    readme = open('readme.md').read()
+except:
+    readme = ''
 
 setup(
     name='pip_services3_prometheus',
-    version='3.0.0',
+    version='3.0.1',
     url='http://github.com/pip-services3-python/pip-services3-prometheus-python',
     license='MIT',
     description='Prometheus components for Pip.Services in Python',

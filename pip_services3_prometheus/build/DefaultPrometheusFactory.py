@@ -4,6 +4,7 @@ from pip_services3_commons.refer import Descriptor
 from pip_services3_components.build import Factory
 
 from pip_services3_prometheus.count.PrometheusCounters import PrometheusCounters
+from pip_services3_prometheus.services.PrometheusMetricsService import PrometheusMetricsService
 
 
 class DefaultPrometheusFactory(Factory):

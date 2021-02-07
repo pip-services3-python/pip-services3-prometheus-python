@@ -86,8 +86,8 @@ class PrometheusMetricsService(RestService):
         """
         Registers all service routes in HTTP endpoint.
         """
-        self.register_route('get', 'metrics', None, lambda: self.__metrics())
-        self.register_route('get', 'metricsandreset', None, lambda: self.__metrics_and_reset())
+        self.register_route('get', 'metrics', None, self.__metrics)
+        self.register_route('get', 'metricsandreset', None, self.__metrics_and_reset)
 
     def __metrics(self):
         """
