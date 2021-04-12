@@ -19,11 +19,11 @@ from setuptools import find_packages
 try:
     readme = open('readme.md').read()
 except:
-    readme = ''
+    readme = __doc__
 
 setup(
     name='pip_services3_prometheus',
-    version='3.0.1',
+    version='3.0.2',
     url='http://github.com/pip-services3-python/pip-services3-prometheus-python',
     license='MIT',
     description='Prometheus components for Pip.Services in Python',

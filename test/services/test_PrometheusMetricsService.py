@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import http.client
+from urllib3 import HTTPConnectionPool, HTTPSConnectionPool
 
 from pip_services3_commons.config import ConfigParams
 from pip_services3_commons.refer import References, Descriptor
@@ -52,7 +52,7 @@ class TestPrometheusMetricsService:
 
     def setup_method(self, method=None):
         url = 'http://localhost:3000'
-        self.rest = http.client.HTTPConnection(url.split('://')[-1])
+        self.rest = HTTPConnectionPool(url.split('://')[-1])
 
     def test_metrics(self):
         self.counters.increment_one('test.counter1')
@@ -60,11 +60,10 @@ class TestPrometheusMetricsService:
         self.counters.last('test.counter3', 3)
         self.counters.timestamp_now('test.counter4')
 
-        self.rest.request('GET', '/metrics')
-        response = self.rest.getresponse()
+        response = self.rest.request('GET', '/metrics')
         assert response is not None
         assert response.status < 400
-        assert len(response.read()) > 0
+        assert len(response.data.decode('utf-8')) > 0
 
     def test_metrics_and_reset(self):
         self.counters.increment_one('test.counter1')
@@ -72,11 +71,10 @@ class TestPrometheusMetricsService:
         self.counters.last('test.counter3', 3)
         self.counters.timestamp_now('test.counter4')
 
-        self.rest.request('GET', '/metricsandreset')
-        response = self.rest.getresponse()
+        response = self.rest.request('GET', '/metricsandreset')
         assert response is not None
         assert response.status < 400
-        assert len(response.read()) > 0
+        assert len(response.data.decode('utf-8')) > 0
 
         counter1 = self.counters.get("test.counter1", CounterType.Increment)
         counter2 = self.counters.get("test.counter2", CounterType.Statistics)

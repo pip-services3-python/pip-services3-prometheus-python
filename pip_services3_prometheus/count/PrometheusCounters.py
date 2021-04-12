@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-import http.client
 import socket
+from urllib3 import HTTPConnectionPool, HTTPSConnectionPool
 
 from pip_services3_commons.refer import IReferenceable, Descriptor
 from pip_services3_commons.run import IOpenable
@@ -129,8 +129,10 @@ class PrometheusCounters(CachedCounters, IReferenceable, IOpenable):
             instance = self.__instance or socket.gethostname()
             self.__request_route = "/metrics/job/" + job + "/instance/" + instance
             uri = connection.get_uri().split('://')[-1]
-            self.__client = http.client.HTTPSConnection(
-                uri) if connection.get_protocol() == 'https' else http.client.HTTPConnection(uri)
+            if connection.get_protocol() == 'https':
+                self.__client = HTTPSConnectionPool(uri)
+            else:
+                self.__client = HTTPConnectionPool(uri)
 
         except Exception as err:
             self.__client = None
@@ -163,8 +165,7 @@ class PrometheusCounters(CachedCounters, IReferenceable, IOpenable):
         err = None
         response = None
         try:
-            self.__client.request('PUT', self.__request_route, body=body)
-            response = self.__client.getresponse()
+            response = self.__client.request('PUT', self.__request_route, body=body)
         except Exception as ex:
             err = ex
         finally:
