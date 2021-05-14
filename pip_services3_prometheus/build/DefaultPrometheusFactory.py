@@ -15,14 +15,13 @@ class DefaultPrometheusFactory(Factory):
     :class:`PrometheusCounters <pip_services3_prometheus.count.PrometheusCounters.PrometheusCounters>`,
     :class:`PrometheusMetricsService <pip_services3_prometheus.services.PrometheusMetricsService.PrometheusMetricsService>`
     """
-    descriptor = Descriptor("pip-services", "factory", "prometheus", "default", "1.0")
-    prometheus_counters_descriptor = Descriptor("pip-services", "counters", "prometheus", "*", "1.0")
-    prometheus_metrics_service_descriptor = Descriptor("pip-services", "metrics-service", "prometheus", "*", "1.0")
+    PrometheusCountersDescriptor = Descriptor("pip-services", "counters", "prometheus", "*", "1.0")
+    PrometheusMetricsServiceDescriptor = Descriptor("pip-services", "metrics-service", "prometheus", "*", "1.0")
 
     def __init__(self):
         """
         Create a new instance of the factory.
         """
         super(DefaultPrometheusFactory, self).__init__()
-        self.register_as_type(DefaultPrometheusFactory.prometheus_counters_descriptor, PrometheusCounters)
-        self.register_as_type(DefaultPrometheusFactory.prometheus_metrics_service_descriptor, PrometheusMetricsService)
+        self.register_as_type(DefaultPrometheusFactory.PrometheusCountersDescriptor, PrometheusCounters)
+        self.register_as_type(DefaultPrometheusFactory.PrometheusMetricsServiceDescriptor, PrometheusMetricsService)

@@ -23,7 +23,7 @@ except:
 
 setup(
     name='pip_services3_prometheus',
-    version='3.0.2',
+    version='3.0.3',
     url='http://github.com/pip-services3-python/pip-services3-prometheus-python',
     license='MIT',
     description='Prometheus components for Pip.Services in Python',

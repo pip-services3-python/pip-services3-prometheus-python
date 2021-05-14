@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
 
 import socket
-from urllib3 import HTTPConnectionPool, HTTPSConnectionPool
+from typing import Any, Optional, List
 
-from pip_services3_commons.refer import IReferenceable, Descriptor
+from pip_services3_commons.config import ConfigParams
+from pip_services3_commons.refer import IReferenceable, Descriptor, IReferences
 from pip_services3_commons.run import IOpenable
-from pip_services3_components.count import CachedCounters
+from pip_services3_components.count import CachedCounters, Counter
 from pip_services3_components.log import CompositeLogger
 from pip_services3_rpc.connect import HttpConnectionResolver
+from urllib3 import HTTPConnectionPool, HTTPSConnectionPool
 
 from pip_services3_prometheus.count.PrometheusCounterConverter import PrometheusCounterConverter
 
@@ -42,12 +44,12 @@ class PrometheusCounters(CachedCounters, IReferenceable, IOpenable):
 
     .. code-block:: python
 
-        let counters = PrometheusCounters()
-        counters.configure(ConfigParams.fromTuples(
+        counters = PrometheusCounters()
+        counters.configure(ConfigParams.from_tuples(
             "connection.protocol", "http",
             "connection.host", "localhost",
             "connection.port", 8080
-        ));
+        ))
 
         counters.open("123")
 
@@ -58,24 +60,24 @@ class PrometheusCounters(CachedCounters, IReferenceable, IOpenable):
         finally:
             timing.end_timing()
 
-        counters.dump();
+        counters.dump()
     """
 
     def __init__(self):
         """
         Creates a new instance of the performance counters.
         """
+        super(PrometheusCounters, self).__init__()
         self.__logger = CompositeLogger()
         self.__connection_resolver = HttpConnectionResolver()
         self.__opened = False
-        self.__source = None
-        self.__instance = None
-        self.__push_enabled = None
-        self.__client = None
-        self.__request_route = None
-        super(PrometheusCounters, self).__init__()
+        self.__source: str = None
+        self.__instance: str = None
+        self.__push_enabled: bool = None
+        self.__client: Any = None
+        self.__request_route: str = None
 
-    def configure(self, config):
+    def configure(self, config: ConfigParams):
         """
         Configures component by passing configuration parameters.
 
@@ -88,7 +90,7 @@ class PrometheusCounters(CachedCounters, IReferenceable, IOpenable):
         self.__instance = config.get_as_float_with_default('instance', self.__instance)
         self.__push_enabled = config.get_as_float_with_default('push_enabled', True)
 
-    def set_references(self, references):
+    def set_references(self, references: IReferences):
         """
         Sets references to dependent components.
 
@@ -103,7 +105,7 @@ class PrometheusCounters(CachedCounters, IReferenceable, IOpenable):
         if context_info is not None and self.__instance is None:
             self.__instance = context_info.context_id
 
-    def is_open(self):
+    def is_open(self) -> bool:
         """
         Checks if the component is opened.
 
@@ -111,7 +113,7 @@ class PrometheusCounters(CachedCounters, IReferenceable, IOpenable):
         """
         return self.__opened
 
-    def open(self, correlation_id):
+    def open(self, correlation_id: Optional[str]):
         """
         Opens the component.
 
@@ -139,7 +141,7 @@ class PrometheusCounters(CachedCounters, IReferenceable, IOpenable):
             self.__logger.warn(correlation_id, "Connection to Prometheus server is not configured: " + str(err))
             return
 
-    def close(self, correlation_id):
+    def close(self, correlation_id: Optional[str]):
         """
         Closes component and frees used resources.
 
@@ -153,7 +155,7 @@ class PrometheusCounters(CachedCounters, IReferenceable, IOpenable):
         finally:
             self.__client = None
 
-    def _save(self, counters):
+    def _save(self, counters: List[Counter]):
         """
         Saves the current counters measurements.
 

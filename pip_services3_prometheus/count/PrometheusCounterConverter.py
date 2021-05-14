@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
+from typing import List, Any, Optional
 
 from pip_services3_commons.convert import StringConverter
-from pip_services3_components.count import CounterType
+from pip_services3_components.count import CounterType, Counter
 
 
 class PrometheusCounterConverter:
@@ -11,7 +12,7 @@ class PrometheusCounterConverter:
     """
 
     @staticmethod
-    def to_string(counters, source, instance):
+    def to_string(counters: List[Counter], source: Optional[str], instance: Optional[str]) -> str:
         """
         Converts the given counters to a string that is returned by Prometheus metrics service.
 
@@ -55,7 +56,7 @@ class PrometheusCounterConverter:
         return builder
 
     @staticmethod
-    def __generate_counter_label(counter, source, instance):
+    def __generate_counter_label(counter: Counter, source: str, instance: str) -> str:
         labels = {}
 
         if source and source != '': labels['source'] = source
@@ -94,8 +95,8 @@ class PrometheusCounterConverter:
         return builder
 
     @staticmethod
-    def __parse_counter_name(counter):
-        if counter is None and (counter.name is None or counter.name == ''): return ''
+    def __parse_counter_name(counter: Counter) -> str:
+        if counter is None or (counter.name is None or counter.name == ''): return ''
 
         name_parts = counter.name.split('.')
 
@@ -122,7 +123,7 @@ class PrometheusCounterConverter:
         return counter.name.lower().replace(".", "_").replace("/", "_")
 
     @staticmethod
-    def __parse_counter_labels(counter, source, instance):
+    def __parse_counter_labels(counter: Counter, source: str, instance: str) -> Any:
         labels = {}
 
         if source and source != '': labels['source'] = source

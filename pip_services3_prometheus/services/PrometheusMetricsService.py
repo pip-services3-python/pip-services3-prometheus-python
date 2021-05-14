@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import bottle
-from pip_services3_commons.refer import Descriptor
+from pip_services3_commons.refer import Descriptor, IReferences
+from pip_services3_components.count import CachedCounters
 from pip_services3_rpc.services import RestService
 
 from pip_services3_prometheus.count.PrometheusCounterConverter import PrometheusCounterConverter
@@ -35,16 +36,16 @@ class PrometheusMetricsService(RestService):
 
     .. code-block:: python
 
-        let service = PrometheusMetricsService();
-        service.configure(ConfigParams.fromTuples(
+        service = PrometheusMetricsService()
+        service.configure(ConfigParams.from_tuples(
             "connection.protocol", "http",
             "connection.host", "localhost",
             "connection.port", 8080
-        ));
+        ))
 
         try:
             service.open("123")
-            print("The Prometheus metrics service is accessible at http://+:8080/metrics");
+            print("The Prometheus metrics service is accessible at http://+:8080/metrics")
         except Exception as err:
             # do something
     """
@@ -53,16 +54,17 @@ class PrometheusMetricsService(RestService):
         """
         Creates a new instance of this service.
         """
-        self.__cached_counters = None
-        self.__source = None
-        self.__instance = None
-
         super(PrometheusMetricsService, self).__init__()
+
+        self.__cached_counters: CachedCounters = None
+        self.__source: str = None
+        self.__instance: str = None
+
         self._dependency_resolver.put("cached-counters", Descriptor("pip-services", "counters", "cached", "*", "1.0"))
         self._dependency_resolver.put("prometheus-counters",
                                       Descriptor("pip-services", "counters", "prometheus", "*", "1.0"))
 
-    def set_references(self, references):
+    def set_references(self, references: IReferences):
         """
         Sets references to dependent components.
 
