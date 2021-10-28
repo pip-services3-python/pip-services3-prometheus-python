@@ -130,8 +130,8 @@ class PrometheusCounters(CachedCounters, IReferenceable, IOpenable):
             job = self.__source or 'unknown'
             instance = self.__instance or socket.gethostname()
             self.__request_route = "/metrics/job/" + job + "/instance/" + instance
-            uri = connection.get_uri().split('://')[-1]
-            if connection.get_protocol() == 'https':
+            uri = connection.get_as_string('uri').split('://')[-1]
+            if connection.get_as_string('protocol') == 'https':
                 self.__client = HTTPSConnectionPool(uri)
             else:
                 self.__client = HTTPConnectionPool(uri)
@@ -139,7 +139,6 @@ class PrometheusCounters(CachedCounters, IReferenceable, IOpenable):
         except Exception as err:
             self.__client = None
             self.__logger.warn(correlation_id, "Connection to Prometheus server is not configured: " + str(err))
-            return
 
     def close(self, correlation_id: Optional[str]):
         """

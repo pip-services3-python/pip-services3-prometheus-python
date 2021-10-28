@@ -13,8 +13,8 @@ Links
 
 """
 
-from setuptools import setup
 from setuptools import find_packages
+from setuptools import setup
 
 try:
     readme = open('readme.md').read()
@@ -23,7 +23,7 @@ except:
 
 setup(
     name='pip_services3_prometheus',
-    version='3.1.0',
+    version='3.1.2',
     url='http://github.com/pip-services3-python/pip-services3-prometheus-python',
     license='MIT',
     description='Prometheus components for Pip.Services in Python',
@@ -36,15 +36,11 @@ setup(
     zip_safe=True,
     platforms='any',
     install_requires=[
-        'iso8601',
         'pytest',
-        'pytz',
-        'PyYAML',
-        'pystache',
-        
-        'pip-services3-commons',
-        'pip-services3-components',
-        'pip-services3-rpc',
+
+        'pip-services3-commons >= 3.3.9, < 4.0',
+        'pip-services3-components >= 3.5.0, < 4.0',
+        'pip-services3-rpc >= 3.2.12, < 4.0'
     ],
     classifiers=[
         'Development Status :: 4 - Beta',
@@ -52,9 +48,10 @@ setup(
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
         'Topic :: Software Development :: Libraries :: Python Modules'
-    ]    
+    ]
 )
