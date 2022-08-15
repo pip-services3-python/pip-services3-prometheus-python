@@ -1,6 +1,14 @@
 {
-    "name": "pip_services3_prometheus",
-    "registry": "pipdevs",
+    "name":  "pip_services3_prometheus",
+    "type": "module",
+    "language": "python",
     "version": "3.1.2",
-    "build": 0
+    "build": 0,
+    "registry": "pipdevs",
+    "artifacts": [
+        {
+            "name":  "<name>",
+            "type": "pypi"
+        }
+    ]
 }
