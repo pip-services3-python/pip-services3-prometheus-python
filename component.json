@@ -1,5 +1,5 @@
 {
-    "name":  "pip_services3_prometheus",
+    "name":  "pip-services3-prometheus",
     "type": "module",
     "language": "python",
     "version": "3.1.2",
